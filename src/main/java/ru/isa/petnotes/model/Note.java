@@ -7,4 +7,6 @@ import jakarta.persistence.Id;
 public class Note {
     @Id
     private int id;
+    private String title;
+    private String content;
 }
