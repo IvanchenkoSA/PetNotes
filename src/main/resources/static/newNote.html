@@ -3,33 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Отправка данных на сервер</title>
+    <title>Добавление заметки</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        input, textarea {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 15px;
+        }
+
+        .message {
+            margin-top: 15px;
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-<h1>New note</h1>
-<form id="dataForm">
-    <label for="title">Title:   </label>
-    <input type="text" id="title" name="title" required><br><br>
 
-    <label for="content">Content:</label>
-    <input type="text" id="content" name="content" required><br><br>
+<h1>Добавление заметки</h1>
 
-    <button type="submit">Отправить</button>
-</form>
+<label for="title">Title:</label>
+<input type="text" id="title" placeholder="Введите название заметки">
+
+<label for="content">Content:</label>
+<textarea id="content" rows="5" placeholder="Введите содержимое заметки"></textarea>
+
+<label for="email">Email:</label>
+<input type="email" id="email" placeholder="Введите ваш email">
+
+<button id="addNoteButton">Добавить заметку</button>
+
+<button id="clearBtn">Очистить</button>
+
+<div id="message" class="message"></div>
 
 <script>
-    document.getElementById('dataForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Предотвращаем стандартное поведение формы
 
-        const title = document.getElementById('title').value;
-        const content = document.getElementById('content').value;
+    document.getElementById('clearBtn').addEventListener('click', function () {
+        document.getElementById("title").value = "";
+        document.getElementById("content").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("message").value = "";
+        let messageDiv = document.getElementById('message');
+        messageDiv.textContent = '';
+    })
+
+    document.getElementById('addNoteButton').addEventListener('click', function () {
+        let title = document.getElementById('title').value.trim();
+        let content = document.getElementById('content').value.trim();
+        let email = document.getElementById('email').value.trim();
+        let messageDiv = document.getElementById('message');
+
+        messageDiv.textContent = '';
+
+        if (!title) {
+            messageDiv.textContent = 'Ошибка: поле "title" не должно быть пустым.';
+            messageDiv.classList.add('error');
+            return;
+        }
+
+        if (!content) {
+            messageDiv.textContent = 'Ошибка: поле "content" не должно быть пустым.';
+            messageDiv.classList.add('error');
+            return;
+        }
+
+        if (!email) {
+            messageDiv.textContent = 'Ошибка: поле "email" не должно быть пустым.';
+            messageDiv.classList.add('error');
+            return;
+        }
 
         const data = {
             title: title,
-            content: content
+            content: content,
+            email: email
         };
 
-        fetch('/api/notes/new-note', { // Отправляем данные на сервер
+
+        fetch('/api/notes/new-note', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,7 +109,18 @@
             .catch((error) => {
                 console.error('Ошибка:', error);
             });
+
+
+        document.getElementById("title").value = "";
+        document.getElementById("content").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("message").value = "";
+
+        messageDiv.textContent = 'Заметка успешно добавлена!';
+        messageDiv.classList.remove('error');
+
     });
 </script>
 </body>
 </html>
+

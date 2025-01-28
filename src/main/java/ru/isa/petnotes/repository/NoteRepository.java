@@ -7,5 +7,5 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface NoteRepository extends JpaRepository<Note, Integer> {
-
+    Note findByEmail(String email);
 }

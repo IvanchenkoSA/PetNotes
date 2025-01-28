@@ -32,4 +32,14 @@ public class InMemoryNoteServiceImpl implements NoteService {
     public void deleteNote(Integer id) {
         service.deleteNote(id);
     }
+
+    @Override
+    public void deleteAllNotes() {
+        service.deleteAllNotes();
+    }
+
+    @Override
+    public List<Note> findNoteByEmail(String email) {
+        return service.findNoteByEmail(email);
+    }
 }

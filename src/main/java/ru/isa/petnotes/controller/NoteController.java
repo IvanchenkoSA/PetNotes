@@ -21,6 +21,11 @@ public class NoteController {
         return noteService.getAllNotes();
     }
 
+    @GetMapping("/get-notes-by-email/{email}")
+    public List<Note> getNotesByEmail(@PathVariable String email) {
+        return noteService.findNoteByEmail(email);
+    }
+
     @GetMapping("/{id}")
     public Note getNoteById(@PathVariable Integer id) {
         return noteService.getNoteById(id);
@@ -35,6 +40,11 @@ public class NoteController {
     @DeleteMapping("/{id}")
     public void deleteNote(@PathVariable Integer id) {
         noteService.deleteNote(id);
+    }
+
+    @DeleteMapping("delete-all-note")
+    public void deleteAllNotes() {
+        noteService.deleteAllNotes();
     }
 
 }

@@ -1,11 +1,55 @@
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <h1>Notes</h1>
+    <meta charset="UTF-8">
+    <h1>Notes</h1>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        input, textarea {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 15px;
+        }
+
+        .message {
+            margin-top: 15px;
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
-<a href="newNote.html">Добавить заметку</a>
+<button id="addNoteButton">Add note</button>
+<br>
+<br>
+<button id="getNotesButton">Note List</button>
+
+
+<script>
+    document.getElementById('addNoteButton').addEventListener('click', function () {
+        window.location.href = 'newNote.html';
+    })
+
+    document.getElementById('getNotesButton').addEventListener("click", function () {
+        window.location.href = 'listNote.html';
+    })
+
+
+</script>
+
 
 </body>
 

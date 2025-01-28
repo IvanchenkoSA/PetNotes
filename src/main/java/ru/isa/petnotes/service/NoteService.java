@@ -16,5 +16,7 @@ public interface NoteService {
     Note getNoteById(Integer id);
     Note createNote(Note note);
     void deleteNote(Integer id);
+    void deleteAllNotes();
+    List<Note> findNoteByEmail(String email);
 
 }

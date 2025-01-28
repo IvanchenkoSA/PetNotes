@@ -1,10 +1,13 @@
 package ru.isa.petnotes.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.stereotype.Component;
+import ru.isa.petnotes.singleon.DataFormater;
+
+import java.time.LocalDateTime;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
 
 
 @Data
@@ -13,8 +16,12 @@ import lombok.Data;
 public class Note {
     @Id
     @GeneratedValue
+
     private Integer id;
     private String title;
     private String content;
+    private String created = DataFormater.getDataFormater().format(LocalDateTime.now());
+    private String email;
+
 
 }

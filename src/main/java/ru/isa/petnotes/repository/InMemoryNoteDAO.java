@@ -4,6 +4,7 @@ import ru.isa.petnotes.model.Note;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InMemoryNoteDAO {
     public final List<Note> NOTES = new ArrayList<>();
@@ -24,6 +25,8 @@ public class InMemoryNoteDAO {
                 .orElse(null);
     }
 
+
+
     public void deleteNote(Integer id) {
         var note = findNote(id);
         if (note != null) {
@@ -31,4 +34,13 @@ public class InMemoryNoteDAO {
         }
     }
 
+    public void deleteAllNotes() {
+        NOTES.clear();
+    }
+
+    public List<Note> findNoteByEmail(String email) {
+        return NOTES.stream()
+                .filter(note -> note.getEmail().equals(email))
+                .collect(Collectors.toList());
+    }
 }

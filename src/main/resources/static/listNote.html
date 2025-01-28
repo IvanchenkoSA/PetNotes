@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лист Заметок</title>
+    <style>
+
+        /*.note-container {*/
+        /*    display: grid;*/
+        /*    grid-template-columns: repeat(3, 1fr);*/
+        /*    gap: 10px;*/
+        /*    border: 1px solid black;*/
+        /*    padding: 10px;*/
+        /*}*/
+        /*.grid-id {*/
+        /*    background-color: lightgreen;*/
+        /*    padding: 20px;*/
+        /*    border: 1px solid green;*/
+        /*}*/
+
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .note {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .note-title {
+            display: flex;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .note-id {
+            margin-left: 92%;
+        }
+        .note-create {
+            margin-left: 92%;
+        }
+
+        .note-content {
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>My notes</h1>
+<div id="notesContainer">Загрузка...</div>
+<button id="returnMainPage">Main page</button>
+<script>
+
+    async function fetchNotes() {
+        try {
+            const response = await fetch('http://localhost:8080/api/notes/get-notes'); // Замените на ваш URL
+            if (!response.ok) {
+                throw new Error('Сеть ответила с ошибкой: ' + response.status);
+            }
+            const notesArray = await response.json();
+            displayNotes(notesArray);
+        } catch (error) {
+            console.error('Ошибка при получении заметок:', error);
+            document.getElementById('notesContainer').textContent = 'Ошибка загрузки заметок.';
+        }
+    }
+
+
+    function displayNotes(notesArray) {
+        const notesContainer = document.getElementById('notesContainer');
+        notesContainer.innerHTML = ''; // Очистить контейнер
+
+        if (notesArray.length === 0) {
+            notesContainer.textContent = 'Нет доступных заметок.';
+            return;
+        }
+        notesArray.forEach(note => {
+
+
+
+            const noteDiv = document.createElement('div');
+            noteDiv.className = 'note';
+
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'note-title';
+            titleDiv.textContent = note.title;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'note-content';
+            contentDiv.textContent = 'Content: ' + note.content;
+
+            const idDiv = document.createElement('div');
+            idDiv.style.aligin = "right";
+            idDiv.className = 'note-id';
+            idDiv.textContent = 'id: ' + note.id;
+
+            const timeDiv = document.createElement('div');
+            timeDiv.style.aligin = "right";
+            timeDiv.className = 'note-create';
+            timeDiv.textContent = note.created;
+
+
+            noteDiv.appendChild(idDiv);
+            noteDiv.appendChild(titleDiv);
+            noteDiv.appendChild(contentDiv);
+            noteDiv.appendChild(timeDiv)
+            notesContainer.appendChild(noteDiv);
+        });
+    }
+
+    fetchNotes();
+    document.getElementById('returnMainPage').addEventListener('click', function () {
+        window.location.href = 'index.html';
+    })
+</script>
+
+
+
+</body>
+</html>
