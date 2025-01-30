@@ -2,6 +2,7 @@ package ru.isa.petnotes.controller;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.*;
 import ru.isa.petnotes.model.Note;
 import ru.isa.petnotes.service.NoteService;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/notes")
 @AllArgsConstructor
+@Primary
 public class NoteController {
 
     private final NoteService noteService;

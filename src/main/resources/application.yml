@@ -13,3 +13,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        spring:
+          jpa:
+            hibernate:
+              ddl-auto: update
+          datasource:
+            url: jdbc:mysql://localhost:5432/note_db
+            username: postgres
+            password: qwerty
